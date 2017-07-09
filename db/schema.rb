@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626054214) do
+ActiveRecord::Schema.define(version: 20170709055805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
+
+  create_table "unique_visits", force: :cascade do |t|
+    t.uuid "visitor_uuid", default: -> { "gen_random_uuid()" }
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "url_id"
+    t.index ["url_id"], name: "index_unique_visits_on_url_id"
+    t.index ["visitor_uuid"], name: "index_unique_visits_on_visitor_uuid"
+  end
 
   create_table "urls", force: :cascade do |t|
     t.string "url", null: false
@@ -32,5 +42,6 @@ ActiveRecord::Schema.define(version: 20170626054214) do
     t.index ["url_id"], name: "index_visits_on_url_id"
   end
 
+  add_foreign_key "unique_visits", "urls"
   add_foreign_key "visits", "urls"
 end
