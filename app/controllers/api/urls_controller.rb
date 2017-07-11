@@ -37,19 +37,10 @@ module Api
                   AND unique_visits.created_at <=  time_table.end_time
               GROUP  BY start_time
               ORDER  BY start_time"
-        interval_results = ActiveRecord::Base.connection.exec_query(sql)
-
-        render json: {
-          data: interval_results.rows,
-          meta: {
-            columns: interval_results.columns
-          }
-        }
+        @interval_results = ActiveRecord::Base.connection.exec_query(sql)
       else
         render json: { error: 'url record not found' }, status: :not_found
       end
-    rescue ArgumentError => ex
-      render json: { error: ex.messages }, status: :bad_request
     end
   end
 end
