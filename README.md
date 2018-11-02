@@ -6,6 +6,10 @@
 2. Tracking url visits in table `visits`.
 3. Tracking approximate unique visitors by cookie in unique_visits
 
+## Related Blog Post
+
+http://bobintornado.github.io/development/2018/07/15/Implement-A-Url-shortener-With-Tracking-And-A-Stat-Endpoint.html
+
 ## Routing
 
 1. visit `/:base_62_id` for url redirection
